@@ -2,18 +2,18 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 
 exports.get = async (req, res) => {
-  // Check if request is valid
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-    // if Valid check if user exists
     const exists = await User.findById(req.params.id);
     if (exists) {
-      // Return user
-      return { exists };
+      return res.code(200).send({ exists });
     } else {
-      // Return user doesnt exist
-      return { error: "User not found" };
+      return res.code(404).send({ error: "User not found" });
     }
   }
-  // Return id not valid
-  return { error: "Id not valid" };
+  return res.code(400).send({ error: "Id not valid" });
+};
+
+exports.post = async (req, res) => {
+  const user = await new User(req.body).save();
+  return res.code(200).send({ user });
 };

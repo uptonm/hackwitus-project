@@ -1,4 +1,9 @@
-const fastify = require("fastify")();
+const fastify = require("fastify")({
+  logger: {
+    prettyPrint: true
+  }
+});
+fastify.register(require("fastify-formbody"));
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -8,7 +13,6 @@ mongoose.connect(
 );
 
 require("./models/user");
-
 require("./routes/user.routes")(fastify);
 
 const PORT = process.env.PORT || 8000;
@@ -17,7 +21,6 @@ const PORT = process.env.PORT || 8000;
 const start = async () => {
   try {
     await fastify.listen(PORT);
-    console.log(`Server listening on ${fastify.server.address().port}`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
