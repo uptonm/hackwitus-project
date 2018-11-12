@@ -117,8 +117,8 @@ class Signup extends Component {
               href="/auth/google"
               role="button"
             >
-              <i class="fab fa-google" style={{ marginRight: "0.5rem" }} /> Sign
-              Up With Google
+              <i className="fab fa-google" style={{ marginRight: "0.5rem" }} />{" "}
+              Sign Up With Google
             </a>
           </div>
         </form>
