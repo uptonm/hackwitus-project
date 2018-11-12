@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import InputField from "./InputField";
 
-class Login extends Component {
+class Signup extends Component {
   state = {
     email: {
       value: "",
@@ -108,13 +108,23 @@ class Login extends Component {
               });
             }}
           />
-          <button className="btn btn-lg btn-success" type="submit">
-            Submit
-          </button>
+          <div className="btn-toolbar float-right">
+            <button className="mr-1 btn btn-outline-success" type="submit">
+              Sign Up
+            </button>
+            <a
+              className="ml-1 btn btn-outline-success"
+              href="/auth/google"
+              role="button"
+            >
+              <i class="fab fa-google" style={{ marginRight: "0.5rem" }} /> Sign
+              Up With Google
+            </a>
+          </div>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default Signup;

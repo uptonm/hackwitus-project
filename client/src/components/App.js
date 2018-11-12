@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import Login from "./Login";
+import { BrowserRouter, Route } from "react-router-dom";
+import Signup from "./Signup";
 class App extends Component {
   render() {
     return (
-      <div className="centered">
-        <Login />
+      <div>
+        <BrowserRouter>
+          <Route exact path="/sign-up" component={Signup} />
+        </BrowserRouter>
       </div>
     );
   }
