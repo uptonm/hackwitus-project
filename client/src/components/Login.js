@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import InputField from "./InputField";
 
 class Login extends Component {
@@ -27,7 +28,7 @@ class Login extends Component {
     return error;
   };
   validatePassword = () => {
-    console.log(`validating ${this.state.password.value.length} long`);
+    //console.log(`validating ${this.state.password.value.length} long`);
     let error =
       this.state.password.value.length < 8
         ? "Password must be > 8 characters"
@@ -43,20 +44,31 @@ class Login extends Component {
   canSubmit = () => {
     return this.validateEmail() && this.validatePassword();
   };
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     let emailValid = this.validateEmail();
     let passValid = this.validatePassword();
-    if (emailValid && passValid) {
-      console.log({
-        email: this.state.email,
-        password: this.state.password
-      });
-    } else {
-      console.log({
-        email: this.state.email,
-        password: this.state.password
-      });
+    if (emailValid.length === 0 && passValid.length === 0) {
+      const data = {
+        email: this.state.email.value,
+        password: this.state.password.value
+      };
+      const response = await axios.post("http://localhost:8000/users", data);
+      if (response.data.error !== "") {
+        this.setState({
+          email: {
+            ...this.state.email,
+            error: "Email already in use"
+          }
+        });
+      } else {
+        this.setState({
+          email: {
+            ...this.state.email,
+            error: ""
+          }
+        });
+      }
     }
   };
   render() {
