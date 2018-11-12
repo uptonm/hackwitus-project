@@ -1,10 +1,26 @@
 import React, { Component } from "react";
-import Login from "./Login";
+import { BrowserRouter, Route } from "react-router-dom";
+import Signup from "./Signup";
+import "../assets/css/login.css";
+
+const Container = () => {
+  return (
+    <div>
+      <div className="login-container">
+        <Signup />
+      </div>
+    </div>
+  );
+};
 class App extends Component {
   render() {
     return (
-      <div className="centered">
-        <Login />
+      <div>
+        <BrowserRouter>
+          <div>
+            <Route exact path="/sign-up" component={Container} />
+          </div>
+        </BrowserRouter>
       </div>
     );
   }

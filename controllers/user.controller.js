@@ -14,8 +14,13 @@ exports.get = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-  const user = await new User(req.body).save();
-  return res.status(200).send({ user });
+  const exists = await User.findOne({ email: req.body.email });
+  if (!exists) {
+    const user = await new User(req.body).save();
+    return res.status(200).send({ user });
+  } else {
+    return res.send({ error: "User exists" });
+  }
 };
 
 exports.put = async (req, res) => {
