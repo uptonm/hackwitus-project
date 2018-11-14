@@ -1,5 +1,6 @@
 const passport = require("passport");
 const googleStrategy = require("passport-google-oauth20").Strategy;
+const GitHubStrategy = require("passport-github").Strategy;
 const mongoose = require("mongoose");
 
 const User = mongoose.model("users");
@@ -13,6 +14,7 @@ passport.deserializeUser((id, done) => {
     done(null, user);
   });
 });
+
 passport.use(
   new googleStrategy(
     {
@@ -36,6 +38,32 @@ passport.use(
         email: profile.emails[0].value
       }).save();
 
+      done(null, user);
+    }
+  )
+);
+
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUBCLIENTID,
+      clientSecret: process.env.GITHUBCLIENTSECRET,
+      callbackURL: "/auth/github/callback"
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ githubId: profile.id });
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+      const names = profile.displayName.split(" ");
+      const first = names[0];
+      const last = names[names.length - 1];
+      const user = await new User({
+        githubId: profile.id,
+        first,
+        last,
+        email: profile.emails[0].value
+      }).save();
       done(null, user);
     }
   )
