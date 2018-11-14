@@ -74,7 +74,7 @@ class Signup extends Component {
   render() {
     return (
       <div className="container">
-        <h1 className="display-4">Sign-In</h1>
+        <h1 className="display-4">Sign-Up</h1>
         <hr />
         <form onSubmit={this.handleSubmit}>
           <InputField
