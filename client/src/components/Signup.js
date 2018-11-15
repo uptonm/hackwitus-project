@@ -120,6 +120,14 @@ class Signup extends Component {
               <i className="fab fa-google" style={{ marginRight: "0.5rem" }} />{" "}
               Sign Up With Google
             </a>
+            <a
+              className="ml-1 btn btn-outline-success"
+              href="/auth/github"
+              role="button"
+            >
+              <i class="fab fa-github-alt" style={{ marginRight: "0.5rem" }} />{" "}
+              Sign Up With GitHub
+            </a>
           </div>
         </form>
       </div>
