@@ -21,7 +21,7 @@ module.exports = app => {
 
   app.get(
     "/auth/github/callback",
-    passport.authenticate("github"),
+    passport.authenticate("github", { failureRedirect: "/login" }),
     (req, res) => {
       res.redirect("/");
     }
